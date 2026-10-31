@@ -8,3 +8,4 @@ data/tournaments.json
 data/current.json
 public/api-data/
 .vercel
+.env*
