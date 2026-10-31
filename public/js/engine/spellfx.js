@@ -447,6 +447,78 @@ P.embers = (g, k, p) => {
   for (let i = 0; i < (p.n ?? 24); i++) { const t = (k * 1.2 + R(i, 11)) % 1; glow(c, g.x + (R(i, 12) - 0.5) * g.S * 0.7 + Math.sin(t * 6 + i) * 12, g.y - t * g.H * 0.7, 2 + R(i, 13) * 3, p.c ?? "#ffb347", (1 - t) * f); }
 };
 
+/* ---------- примитивы для движений рук (core/motions.js) ---------- */
+P.orbblast = (g, k) => { // расенган: вихрь в ладони крутится, летит и взрывается
+  const { c, S } = g, t1 = clamp(k / 0.5), t2 = clamp((k - 0.5) / 0.5);
+  const x = lerp(g.x, g.W * 0.5, easeOut(t2)), y = lerp(g.y, g.H * 0.3, easeOut(t2));
+  if (t2 < 0.4) {
+    const r = S * 0.1 * (0.4 + 0.6 * ease(t1)) * (1 + 0.12 * Math.sin(k * 60));
+    glow(c, x, y, r * 2.4, g.col, 0.35); glow(c, x, y, r, g.col, 0.85); glow(c, x, y, r * 0.45, "#ffffff", 1);
+    for (let i = 0; i < 5; i++) {
+      const a0 = k * 40 + (i * TAU) / 5;
+      c.strokeStyle = rgba(lighten(g.col, 0.6), 0.6); c.lineWidth = 3; c.beginPath(); c.arc(x, y, r * (0.6 + 0.12 * i), a0, a0 + 1.2); c.stroke();
+    }
+  }
+  if (t2 > 0.3) {
+    const b = clamp((t2 - 0.3) / 0.7), f = 1 - b;
+    glow(c, x, y, S * 0.5 * easeOut(b), g.col, 0.6 * f); glow(c, x, y, S * 0.18 * (1 - b * 0.5), "#ffffff", 0.9 * f);
+    c.strokeStyle = rgba("#ffffff", 0.8 * f); c.lineWidth = 8 * f + 1; c.beginPath(); c.arc(x, y, S * 0.5 * easeOut(b), 0, TAU); c.stroke();
+    for (let i = 0; i < 12; i++) { const a = R(i) * TAU, d = S * 0.5 * easeOut(b) * (0.5 + R(i, 2) * 0.6); glow(c, x + Math.cos(a) * d, y + Math.sin(a) * d, 4 + S * 0.01, lighten(g.col, 0.5), 0.9 * f); }
+  }
+};
+
+P.blade = (g, k) => { // райкири: рука трещит и колет вперед молниеносным клинком
+  const { c, S } = g, f = fade(k, 0.08, 0.35), reach = easeOut(clamp(k / 0.35));
+  const tx = lerp(g.x, g.W * 0.5, reach), ty = lerp(g.y, g.H * 0.3, reach), seed = Math.floor(k * 40);
+  glow(c, g.x, g.y, S * (0.1 + 0.08 * Math.sin(k * 90)), g.col, 0.8 * f);
+  if (Math.hypot(tx - g.x, ty - g.y) > 2) for (let i = 0; i < 5; i++) neon(c, bolt(c, g.x, g.y, tx, ty, seed + i * 7, 0.06 + 0.02 * i), i ? lighten(g.col, 0.4) : g.col, i ? 1.4 : 4, f * (i ? 0.55 : 1));
+  if (reach > 0.9) { glow(c, tx, ty, S * 0.3 * f, g.col, 0.6); for (let i = 0; i < 10; i++) { const a = R(i, seed) * TAU, d = S * 0.15 * R(i, 1); glow(c, tx + Math.cos(a) * d, ty + Math.sin(a) * d, 3, "#ffffff", 0.9 * f); } }
+};
+
+P.clones = (g, k) => { // теневые клоны: облачка дыма и ряд силуэтов
+  const { c, S } = g, f = fade(k, 0.1, 0.3);
+  for (let i = -2; i <= 2; i++) {
+    const lk = clamp((k - Math.abs(i) * 0.08) / 0.4), x = g.W * 0.5 + i * S * 0.2, y = g.y;
+    glow(c, x, y - S * 0.06, S * 0.16 * (1 - lk * 0.4), "#ffffff", 0.5 * (1 - lk));
+    const a = ease(lk) * f;
+    glow(c, x, y - S * 0.2, S * 0.05, g.col, 0.9 * a);
+    c.save(); c.translate(x, y - S * 0.06); c.scale(0.55, 1.5); glow(c, 0, 0, S * 0.09, g.col, 0.75 * a); c.restore();
+  }
+};
+
+P.blast = (g, k) => { // бомбарда: вспышка, огненный шар и разлетающиеся осколки
+  const { c, S } = g, cx = g.W * 0.5, cy = g.H * 0.45, e = easeOut(clamp(k / 0.5)), f = 1 - clamp((k - 0.3) / 0.7);
+  glow(c, cx, cy, S * 0.45 * e, "#ff7a1a", 0.8 * f); glow(c, cx, cy, S * 0.25 * e, "#ffd36b", 0.9 * f); glow(c, cx, cy, S * 0.1 * e, "#ffffff", f);
+  c.strokeStyle = rgba("#ffd36b", 0.8 * f); c.lineWidth = 6 * f + 1; c.beginPath(); c.arc(cx, cy, S * 0.5 * e, 0, TAU); c.stroke();
+  for (let i = 0; i < 18; i++) {
+    const a = R(i) * TAU, d = S * (0.1 + 0.5 * e * (0.5 + R(i, 3)));
+    stroke(c, [[cx + Math.cos(a) * d * 0.7, cy + Math.sin(a) * d * 0.7], [cx + Math.cos(a) * d, cy + Math.sin(a) * d]], "#ffb04a", 3, 0.9 * f);
+  }
+};
+
+P.shockwave = (g, k) => { // эверте статум: волны давления летят от кастера к цели
+  const { c, S } = g, f = fade(k, 0.1, 0.4), tx = g.W * 0.5, ty = g.H * 0.32;
+  for (let i = 0; i < 4; i++) {
+    const t = clamp(k * 1.4 - i * 0.12), x = lerp(g.x, tx, easeOut(t)), y = lerp(g.y, ty, easeOut(t)), r = S * (0.08 + 0.22 * t);
+    c.strokeStyle = rgba(lighten(g.col, 0.4), 0.8 * (1 - t) * f); c.lineWidth = 6 * (1 - t) + 1; c.beginPath(); c.ellipse(x, y, r, r * 0.5, 0, 0, TAU); c.stroke();
+  }
+  for (let i = 0; i < 10; i++) { const o = (R(i) - 0.5) * S * 0.3, t = clamp(k * 1.4 - R(i, 1) * 0.3); stroke(c, [[lerp(g.x, tx, t * 0.7) + o, lerp(g.y, ty, t * 0.7)], [lerp(g.x, tx, t) + o, lerp(g.y, ty, t)]], g.col, 2, 0.5 * f); }
+};
+
+P.implode = (g, k) => { // редукто: преграда сжимается в точку и рассыпается осколками
+  const { c, S } = g, cx = g.W * 0.5, cy = g.H * 0.4;
+  if (k < 0.55) {
+    const t = k / 0.55;
+    for (let i = 0; i < 3; i++) { const r = S * 0.4 * (1 - clamp(t - i * 0.1)); c.strokeStyle = rgba(g.col, 0.7 * t); c.lineWidth = 4; c.beginPath(); c.arc(cx, cy, r, 0, TAU); c.stroke(); }
+    for (let i = 0; i < 24; i++) { const a = R(i) * TAU, d = S * (0.45 - 0.4 * t) * (0.6 + R(i, 2) * 0.6); glow(c, cx + Math.cos(a) * d, cy + Math.sin(a) * d, 3 + S * 0.008, lighten(g.col, 0.3), 0.8); }
+    glow(c, cx, cy, S * 0.1 * t, "#ffffff", 0.9 * t);
+  } else {
+    const b = (k - 0.55) / 0.45, f = 1 - b;
+    glow(c, cx, cy, S * 0.4 * f, "#ffffff", 0.9 * f);
+    for (let i = 0; i < 16; i++) { const a = R(i, 5) * TAU, d = S * 0.45 * easeOut(b) * (0.4 + R(i, 7)); stroke(c, [[cx + Math.cos(a) * d * 0.8, cy + Math.sin(a) * d * 0.8], [cx + Math.cos(a) * d, cy + Math.sin(a) * d]], g.col, 3, 0.9 * f); }
+  }
+};
+
 export const FX_PRIMITIVES = Object.keys(P);
 
 /**

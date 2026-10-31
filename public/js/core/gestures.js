@@ -1,6 +1,8 @@
 // Trace points are {x,y,t} in 0..1 screen space AS THE PLAYER SEES IT (x already mirrored), y grows downward.
 export const WAND = ["circle", "swipe_right", "swipe_left", "up", "down", "zigzag"];
 export const SEALS = ["prayer", "fist_palm", "double_fist", "peace", "open_hands", "fist_up"];
+// Движения руки во времени (core/motions.js): их видно только по ряду кадров, а не по одной позе.
+export const MOTIONS = ["charge", "spin", "push", "spread", "crush", "shake"];
 
 export const GESTURE_LABELS = {
   circle: "Нарисуй круг палочкой",
@@ -15,9 +17,15 @@ export const GESTURE_LABELS = {
   peace: "Овца: два пальца вверх",
   open_hands: "Обезьяна: обе ладони открыты и раздвинуты",
   fist_up: "Змея: кулак высоко над головой (упрощенно)",
+  charge: "Накопи силу: сожми кулак и держи",
+  spin: "Раскрути шар: води ладонью кругами",
+  push: "Толчок: резко выбрось ладонь к камере",
+  spread: "Растяни: разведи руки в стороны",
+  crush: "Сожми: раскрытая ладонь в кулак",
+  shake: "Встряхни: быстрая дрожь кулака",
 };
 
-export const gestureKind = (id) => (WAND.includes(id) ? "wand" : SEALS.includes(id) ? "seal" : null);
+export const gestureKind = (id) => (WAND.includes(id) ? "wand" : SEALS.includes(id) ? "seal" : MOTIONS.includes(id) ? "motion" : null);
 
 const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 const NONE = { id: null, confidence: 0 };
@@ -86,7 +94,7 @@ export function classifyTrace(points) {
 // MediaPipe layout: 0 wrist, 5/9/13/17 finger MCPs, (6,8) (10,12) (14,16) (18,20) = (pip, tip)
 const FINGERS = [[6, 8], [10, 12], [14, 16], [18, 20]];
 
-function describeHand(lm) {
+export function describeHand(lm) {
   const wrist = lm[0];
   const size = dist(wrist, lm[9]) || 1e-6;
   const extended = FINGERS.map(([pip, tip]) => dist(lm[tip], wrist) > dist(lm[pip], wrist) * 1.15);

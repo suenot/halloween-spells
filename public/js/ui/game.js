@@ -3,7 +3,9 @@ import { state, save, settings, setSetting, spellById, playerById } from "../sto
 import { createTournament, nextTurn, recordAttempt, standings, teamStandings, finishTournament } from "../core/tournament.js";
 import { matchScore } from "../core/fuzzy.js";
 import { scoreAttempt } from "../core/scoring.js";
-import { classifyTrace, classifyPose, matchSequence, gestureKind } from "../core/gestures.js";
+import { classifyTrace, classifyPose, matchSequence, WAND, SEALS, MOTIONS } from "../core/gestures.js";
+import { MotionTracker } from "../core/motions.js";
+import { HandFx } from "../engine/handfx.js";
 import { startCamera, createHandTracker } from "../engine/camera.js";
 import { listen, speechSupported, prepareSpeech } from "../engine/speech.js";
 import { castEffect, ELEMENT_INFO } from "../engine/fx.js";
@@ -143,10 +145,10 @@ function renderStage(root) {
 
   /* ---- hud + controls */
   let demo = null, demoKey = "";
-  function demoFor(key, steps, compact) {
+  function demoFor(key, steps, compact, color) {
     if (demo && demoKey === key) return demo;
     demo?.destroy(); demoKey = key;
-    demo = demoPlayer(steps, { compact });
+    demo = demoPlayer(steps, { compact, color });
     demo.classList.add("dock");
     return demo;
   }
@@ -163,7 +165,7 @@ function renderStage(root) {
       h("div", { class: "who" }, h("span", { class: "avatar" }, p?.avatar ?? "🎃"), h("div", {}, h("small", {}, `Ход ${cur.index + 1} из ${t.queue.length}${p?.race === "giant" ? " · великан" : ""}`), h("h2", {}, p?.name ?? "?"))),
       cur.text && h("p", { class: "story-line" }, cur.text),
       h("div", { class: "spellbox" }, h("small", {}, `${el.icon} ${el.label}`), h("h1", {}, sp.name), h("p", { class: "phrase big" }, `"${sp.phrase}"`), gesturePills(sp.gesture), h("p", { class: "hint" }, sp.hint), pumpkins(sp.difficulty)),
-      demoFor(`r${cur.index}`, sp.gesture, true));
+      demoFor(`r${cur.index}`, sp.gesture, true, sp.color));
     controls.replaceChildren(h("button", { class: "btn primary big", onclick: begin }, "▶ Колдовать (Enter)"),
       h("button", { class: "btn ghost", onclick: skip }, "Пропустить"));
   }
@@ -178,7 +180,7 @@ function renderStage(root) {
       h("div", { class: "meters" },
         meter("🗣️ Слово", sess.phraseSim), meter("🪄 Жест", matchSequence(sp.gesture, sess.observed))),
       gesturePills(sp.gesture, got),
-      demoFor(`c${cur.index}`, sp.gesture, true),
+      demoFor(`c${cur.index}`, sp.gesture, true, sp.color),
       sess.heard ? h("p", { class: "heard" }, `Я слышу: ${sess.heard}`) : null);
     controls.replaceChildren(h("button", { class: "btn good", onclick: () => finishCast(true) }, "Готово"));
   }
@@ -199,6 +201,8 @@ function renderStage(root) {
   }
 
   const ctx = overlay.getContext("2d");
+  const handFx = new HandFx();
+  const MOTION_SFX = { charge: "pop", spin: "whoosh", push: "whoosh", spread: "pop", crush: "pop", shake: "click" };
   function onHands(hands, now) {
     const w = (overlay.width = overlay.clientWidth), hh = (overlay.height = overlay.clientHeight);
     ctx.clearRect(0, 0, w, hh);
@@ -207,12 +211,18 @@ function renderStage(root) {
     for (const hand of hands) for (const i of [0, 4, 8, 12, 16, 20]) { const q = show(hand[i]); ctx.beginPath(); ctx.arc(q.x, q.y, i === 8 ? 9 : 5, 0, 6.283); ctx.fill(); }
     if (phase !== "cast" || !sess) return;
     const sp = spellById(turn().spellId);
-    if (gestureKind(sp.gesture[0]) === "seal" || sp.school === "shinobi") {
+    const wantsSeal = sp.gesture.some((g) => SEALS.includes(g));
+    if (sp.gesture.some((g) => MOTIONS.includes(g))) {
+      const m = sess.motion.push(hands, now);
+      for (const id of m.events) { sess.observed.push(id); audio.sfx(MOTION_SFX[id] ?? "pop"); }
+      handFx.frame(ctx, { W: w, H: hh, now, color: sp.color, m, show });
+    }
+    if (wantsSeal) {
       const pose = classifyPose(hands);
       if (pose.id && pose.id === sess.holdId) sess.holdN++; else { sess.holdId = pose.id; sess.holdN = 1; }
       if (sess.holdN === 6 && pose.id && pose.id !== sess.lastSeal) { sess.observed.push(pose.id); sess.lastSeal = pose.id; }
       if (!pose.id && sess.holdN > 8) sess.lastSeal = null;
-    } else if (hands[0] || cfg.wand) {
+    } else if (sp.gesture.some((g) => WAND.includes(g)) && (hands[0] || cfg.wand)) {
       let tip = hands[0]?.[8];
       if (cfg.wand) {
         const f = findWandTip(video, cfg.wand, hands[0]?.[0]);
@@ -251,7 +261,7 @@ function renderStage(root) {
 
   function startCast(sp) {
     phase = "cast";
-    sess = { phraseSim: 0, observed: [], buffer: [], holdId: null, holdN: 0, lastSeal: null, lastTrace: 0, heard: "", remaining: 12 + 4 * (sp.gesture.length - 1), t0: performance.now() };
+    sess = { motion: new MotionTracker(), phraseSim: 0, observed: [], buffer: [], holdId: null, holdN: 0, lastSeal: null, lastTrace: 0, heard: "", remaining: 12 + 4 * (sp.gesture.length - 1), t0: performance.now() };
     if (cfg.useSpeech && speechSupported()) {
       mic = listen((text) => { const sc = matchScore(text, sp.phrase); if (sc >= sess.phraseSim || !sess.heard) { sess.phraseSim = Math.max(sess.phraseSim, sc); sess.heard = text; } }, { onError: (e) => { notice.textContent = "Микрофон не работает (" + e + "). Ведущий оценивает слово вручную."; sess.micDead = true; } });
     }

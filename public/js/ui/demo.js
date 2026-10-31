@@ -1,7 +1,8 @@
 // Анимированная демонстрация жестов: 3D-ролики руки (tools/blender) по шагам заклинания.
 // Для палочки поверх ролика рисуется светящийся след по заранее записанной траектории кончика.
 import { h } from "./dom.js";
-import { WAND, GESTURE_LABELS } from "../core/gestures.js";
+import { WAND, MOTIONS, GESTURE_LABELS } from "../core/gestures.js";
+import { createMotionDemo } from "./motion-demo.js";
 import { GESTURE_ICONS } from "./labels.js";
 
 const clipOf = (g) => (WAND.includes(g) ? `w_${g}` : g);
@@ -18,8 +19,8 @@ async function loadTrace(g) {
  * steps: id жестов по порядку. opts.compact: меньше размер (подсказка во время каста).
  * Возвращает элемент; у него есть .destroy().
  */
-export function demoPlayer(steps, { compact = false } = {}) {
-  let i = 0, raf = 0, trace = null, alive = true;
+export function demoPlayer(steps, { compact = false, color } = {}) {
+  let i = 0, raf = 0, trace = null, alive = true, motion = null;
   const video = h("video", { muted: true, playsinline: true, preload: "auto", class: "demo-video" });
   video.muted = true;
   const canvas = h("canvas", { class: "demo-trail", width: 420, height: 420 });
@@ -43,6 +44,12 @@ export function demoPlayer(steps, { compact = false } = {}) {
     const g = steps[i];
     trace = null;
     clearTrail();
+    if (MOTIONS.includes(g)) {
+      video.pause(); video.removeAttribute("src"); video.style.display = "none";
+      motion = createMotionDemo(g, { color: /^#[0-9a-f]{6}$/i.test(color ?? "") ? color : "#ffb84a", once: steps.length > 1 });
+      return;
+    }
+    motion = null; video.style.display = "";
     video.loop = steps.length === 1;
     video.src = url(g, "webm");
     video.play().catch(() => {});
@@ -56,6 +63,11 @@ export function demoPlayer(steps, { compact = false } = {}) {
     raf = requestAnimationFrame(drawTrail);
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (motion) {
+      motion.draw(ctx, canvas.width, canvas.height);
+      if (motion.done) setTimeout(() => alive && go(i + 1), 350), motion = null;
+      return;
+    }
     if (!trace || !video.duration) return;
     const f = Math.floor(video.currentTime * trace.fps);
     const [a, b] = trace.trace;

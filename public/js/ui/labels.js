@@ -5,6 +5,7 @@ import { GESTURE_LABELS } from "../core/gestures.js";
 export const GESTURE_ICONS = {
   circle: "⭕", swipe_right: "➡️", swipe_left: "⬅️", up: "⬆️", down: "⬇️", zigzag: "⚡",
   prayer: "🙏", fist_palm: "🤜", double_fist: "👊", peace: "✌️", open_hands: "🖐️", fist_up: "✊",
+  charge: "🔋", spin: "🌀", push: "💥", spread: "↔️", crush: "💢", shake: "📳",
 };
 
 export const pumpkins = (n, total = 5) =>

@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { WAND, SEALS } from "../public/js/core/gestures.js";
+import { WAND, SEALS, MOTIONS } from "../public/js/core/gestures.js";
 
 const load = (n) => JSON.parse(fs.readFileSync(new URL(`../data/${n}.json`, import.meta.url), "utf8"));
 const spells = load("spells");
@@ -16,7 +16,7 @@ test("spells valid", () => {
     assert.ok(ELEMENTS.includes(s.element), s.id);
     assert.ok(s.difficulty >= 1 && s.difficulty <= 5, s.id);
     assert.ok(s.gesture.length > 0, s.id);
-    const pool = s.school === "wizard" ? WAND : SEALS;
+    const pool = [...(s.school === "wizard" ? WAND : SEALS), ...MOTIONS];
     for (const g of s.gesture) assert.ok(pool.includes(g), `${s.id}: ${g}`);
   }
   assert.ok(spells.filter((s) => s.school === "wizard").length >= 12);

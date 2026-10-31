@@ -7,7 +7,7 @@ import { castEffect, ELEMENT_INFO, SCHOOL_INFO } from "../engine/fx.js";
 export function showSpell(spell) {
   const canvas = h("canvas", { class: "fx-canvas" });
   const info = ELEMENT_INFO[spell.element];
-  const demo = demoPlayer(spell.gesture);
+  const demo = demoPlayer(spell.gesture, { color: spell.color });
   const body = h("div", { class: "spell-modal", style: { "--c": spell.color } },
     canvas,
     h("span", { class: "badge" }, `${SCHOOL_INFO[spell.school].icon} ${SCHOOL_INFO[spell.school].label} · ${info.icon} ${info.label}`),
