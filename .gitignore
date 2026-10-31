@@ -9,3 +9,4 @@ data/current.json
 public/api-data/
 .vercel
 .env*
+public/vendor/asr/

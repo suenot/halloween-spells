@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Слух: лаборатория</title>
+<link rel="stylesheet" href="/css/theme.css">
+<style>
+  body { padding: 20px clamp(16px, 3vw, 40px) 60px; max-width: 1100px; margin: 0 auto; }
+  h1 { font-size: 28px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 18px; }
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 16px; margin-bottom: 14px; }
+  .engines { display: grid; gap: 8px; }
+  .eng { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 12px; align-items: center; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); cursor: pointer; }
+  .eng.on { border-color: var(--orange); background: rgba(255, 122, 26, .1); }
+  .eng.off { opacity: .45; cursor: not-allowed; }
+  .eng b { font-size: 16px; }
+  .eng small { grid-column: 2 / 4; color: var(--muted); }
+  .eng .tag { font-size: 13px; color: var(--muted); text-align: right; }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 10px; }
+  select { font: inherit; padding: 8px 12px; border-radius: 12px; background: var(--card-hi); color: var(--ink); border: 1px solid var(--line); }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 13px; }
+  td.txt { font-family: ui-monospace, Menlo, monospace; word-break: break-word; }
+  .score { font-weight: 800; }
+  .good { color: var(--green); } .mid { color: #ffd166; } .bad { color: var(--pink); }
+  .status { color: var(--muted); font-size: 14px; min-height: 20px; }
+</style>
+</head>
+<body>
+<h1>🎙 Слух: лаборатория</h1>
+<p class="sub">Выбери движки распознавания (можно несколько сразу, игра берет лучшее совпадение), проверь их на записи или на своем голосе.</p>
+
+<div class="panel">
+  <div class="engines" id="engines"></div>
+</div>
+
+<div class="panel">
+  <div class="row">
+    <label>Заклинание <select id="spell"></select></label>
+    <label>Источник <select id="source"></select></label>
+    <button class="btn primary" id="run">▶ Проверить</button>
+    <button class="btn" id="stop" disabled>■ Стоп</button>
+    <a class="btn ghost" href="/#/play">← В игру</a>
+  </div>
+  <div class="status" id="status"></div>
+</div>
+
+<div class="panel">
+  <table>
+    <thead><tr><th>Движок</th><th>Загрузка</th><th>Что услышал</th><th>Совпадение</th><th>Первый текст</th><th>Итог</th></tr></thead>
+    <tbody id="results"></tbody>
+  </table>
+</div>
+<script type="module" src="/js/ui/asr-lab.js"></script>
+</body>
+</html>

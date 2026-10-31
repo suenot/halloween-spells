@@ -1,11 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "buildCommand": "bash scripts/fetch-vendor.sh && node scripts/vercel-build.mjs",
+  "buildCommand": "bash scripts/fetch-vendor.sh && bash scripts/fetch-asr.sh runtime && node scripts/vercel-build.mjs",
   "outputDirectory": "public",
   "rewrites": [{ "source": "/api/:name", "destination": "/api-data/:name.json" }],
   "headers": [
     { "source": "/api/(.*)", "headers": [{ "key": "Cache-Control", "value": "no-store" }] },
+    { "source": "/vendor/asr/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
     { "source": "/vendor/mediapipe/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] }
   ]
 }

@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { similarity, bestSimilarity } from "../public/js/core/fuzzy.js";
+import { similarity, bestSimilarity, matchScore, phonetic } from "../public/js/core/fuzzy.js";
 import { scoreAttempt } from "../public/js/core/scoring.js";
 import { splitTeams } from "../public/js/core/teams.js";
 
@@ -14,6 +14,15 @@ test("similarity tolerates small speech errors", () => {
 test("bestSimilarity finds phrase inside longer speech", () => {
   assert.ok(bestSimilarity("ну давай люмос максима", "люмос максима") > 0.95);
   assert.equal(bestSimilarity(undefined, "люмос"), 0);
+});
+
+test("phonetic matching forgives how kids and engines bend words", () => {
+  assert.equal(phonetic("Экспекто"), phonetic("икспектА"));
+  assert.ok(matchScore("экспекто патроним", "Экспекто Патронум") >= 0.85);
+  assert.ok(matchScore("kai", "Кай") >= 0.8);
+  assert.ok(matchScore("Expecto Patronum", "Экспекто Патронум") >= 0.8);
+  assert.ok(matchScore("хлеб с маслом", "Экспекто Патронум") < 0.5);
+  assert.equal(matchScore("", "Кай"), 0);
 });
 
 test("scoreAttempt multiplies by difficulty, never NaN", () => {

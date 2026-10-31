@@ -1,11 +1,11 @@
 import { h, toast, countUp, flip } from "./dom.js";
 import { state, save, settings, setSetting, spellById, playerById } from "../store.js";
 import { createTournament, nextTurn, recordAttempt, standings, teamStandings, finishTournament } from "../core/tournament.js";
-import { bestSimilarity } from "../core/fuzzy.js";
+import { matchScore } from "../core/fuzzy.js";
 import { scoreAttempt } from "../core/scoring.js";
 import { classifyTrace, classifyPose, matchSequence, gestureKind } from "../core/gestures.js";
 import { startCamera, createHandTracker } from "../engine/camera.js";
-import { listen, speechSupported } from "../engine/speech.js";
+import { listen, speechSupported, prepareSpeech } from "../engine/speech.js";
 import { castEffect, ELEMENT_INFO } from "../engine/fx.js";
 import { gesturePills, pumpkins } from "./labels.js";
 import { demoPlayer } from "./demo.js";
@@ -195,6 +195,7 @@ function renderStage(root) {
       } catch (e) { notice.textContent = "Камера недоступна. Ведущий оценивает вручную. " + (e.message ?? ""); }
     } else notice.textContent = "Камера выключена, ведущий оценивает вручную.";
     if (!speechSupported() && cfg.useSpeech) notice.textContent += " Этот браузер не слышит речь: открой в Chrome.";
+    else if (cfg.useSpeech) prepareSpeech((id, text) => { if (!/готово/.test(text)) notice.textContent = `Слух: ${text}`; else if (notice.textContent.startsWith("Слух:")) notice.textContent = ""; });
   }
 
   const ctx = overlay.getContext("2d");
@@ -252,7 +253,7 @@ function renderStage(root) {
     phase = "cast";
     sess = { phraseSim: 0, observed: [], buffer: [], holdId: null, holdN: 0, lastSeal: null, lastTrace: 0, heard: "", remaining: 12 + 4 * (sp.gesture.length - 1), t0: performance.now() };
     if (cfg.useSpeech && speechSupported()) {
-      mic = listen((text) => { sess.phraseSim = Math.max(sess.phraseSim, bestSimilarity(text, sp.phrase)); sess.heard = text; }, { onError: (e) => { notice.textContent = "Микрофон не работает (" + e + "). Ведущий оценивает слово вручную."; sess.micDead = true; } });
+      mic = listen((text) => { const sc = matchScore(text, sp.phrase); if (sc >= sess.phraseSim || !sess.heard) { sess.phraseSim = Math.max(sess.phraseSim, sc); sess.heard = text; } }, { onError: (e) => { notice.textContent = "Микрофон не работает (" + e + "). Ведущий оценивает слово вручную."; sess.micDead = true; } });
     }
     paintCast();
     timer = setInterval(() => {
@@ -341,6 +342,7 @@ function renderStage(root) {
   const bar = h("div", { class: "settings" },
     toggle("Щадящая оценка", cfg.lenient, (v) => { cfg.lenient = v; setSetting("lenient", v); }),
     toggle("Слушать слова", cfg.useSpeech, (v) => { cfg.useSpeech = v; setSetting("useSpeech", v); }),
+    h("a", { class: "btn ghost", href: "/asr-lab.html", target: "_blank", rel: "noopener", title: "Какие нейросети слушают заклинания" }, "🎙 Слух"),
     toggle("Зеркало", cfg.mirror, (v) => { cfg.mirror = v; setSetting("mirror", v); stageBox.classList.toggle("nomirror", !v); }),
     h("button", { class: "btn ghost", onclick: async () => { if (!confirm("Закончить этот турнир сейчас? Результаты сохранятся.")) return; t = finishTournament({ ...t, cursor: t.queue.length }); state.tournaments.push(t); state.current = null; await Promise.all([save("tournaments"), save("current")]); location.hash = "#/board"; } }, "Завершить турнир"));
   center.append(bar);
