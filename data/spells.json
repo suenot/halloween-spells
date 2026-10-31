@@ -1,0 +1,723 @@
+[
+  {
+    "id": "lumos",
+    "school": "wizard",
+    "name": "Люмос",
+    "phrase": "Люмос",
+    "gesture": [
+      "up"
+    ],
+    "description": "На кончике палочки загорается теплый светлый огонек. Отлично, чтобы не бояться темноты.",
+    "element": "light",
+    "difficulty": 1,
+    "power": 2,
+    "cost": 1,
+    "range": "близко",
+    "hint": "Подними палочку вверх, как факел.",
+    "color": "#fff2a8",
+    "fx": [
+      {
+        "p": "torch"
+      },
+      {
+        "p": "motes",
+        "n": 18
+      }
+    ]
+  },
+  {
+    "id": "repairo",
+    "school": "wizard",
+    "name": "Репаро",
+    "phrase": "Репаро",
+    "gesture": [
+      "down"
+    ],
+    "description": "Чинит разбитые чашки, сломанные игрушки и треснувшие тыквы.",
+    "element": "earth",
+    "difficulty": 1,
+    "power": 2,
+    "cost": 1,
+    "range": "близко",
+    "hint": "Аккуратно опусти палочку вниз.",
+    "color": "#9a6b3b",
+    "fx": [
+      {
+        "p": "converge"
+      },
+      {
+        "p": "motes",
+        "n": 12,
+        "rise": 0.4
+      }
+    ]
+  },
+  {
+    "id": "aqua",
+    "school": "wizard",
+    "name": "Аква Эрукто",
+    "phrase": "Аква Эрукто",
+    "gesture": [
+      "swipe_right"
+    ],
+    "description": "Из палочки бьет веселая струя воды. Тушит свечи и поливает цветы.",
+    "element": "water",
+    "difficulty": 2,
+    "power": 4,
+    "cost": 2,
+    "range": "средне",
+    "hint": "Взмахни палочкой вправо, как будто плещешь водой.",
+    "color": "#2fa8ff",
+    "fx": [
+      {
+        "p": "jet"
+      },
+      {
+        "p": "flash",
+        "a": 0.12,
+        "len": 0.1
+      }
+    ]
+  },
+  {
+    "id": "incendio",
+    "school": "wizard",
+    "name": "Инсендио",
+    "phrase": "Инсендио",
+    "gesture": [
+      "circle"
+    ],
+    "description": "Вспыхивает огненный шар размером с мандарин. Осторожно, горячо!",
+    "element": "fire",
+    "difficulty": 2,
+    "power": 5,
+    "cost": 3,
+    "range": "средне",
+    "hint": "Нарисуй палочкой круг.",
+    "color": "#ff6a1a",
+    "fx": [
+      {
+        "p": "pillar"
+      },
+      {
+        "p": "embers",
+        "n": 28
+      }
+    ]
+  },
+  {
+    "id": "glacius",
+    "school": "wizard",
+    "name": "Глациус",
+    "phrase": "Глациус",
+    "gesture": [
+      "swipe_left"
+    ],
+    "description": "Все вокруг покрывается красивым инеем, а лужа превращается в каток.",
+    "element": "ice",
+    "difficulty": 2,
+    "power": 4,
+    "cost": 3,
+    "range": "средне",
+    "hint": "Резко взмахни палочкой влево.",
+    "color": "#8fe3ff",
+    "fx": [
+      {
+        "p": "crystals"
+      }
+    ]
+  },
+  {
+    "id": "levitate",
+    "school": "wizard",
+    "name": "Левитация",
+    "phrase": "Вингардиум Левиоса",
+    "gesture": [
+      "swipe_right",
+      "up"
+    ],
+    "description": "Любой предмет плавно взлетает в воздух. Главное, говорить четко!",
+    "element": "air",
+    "difficulty": 2,
+    "power": 3,
+    "cost": 2,
+    "range": "средне",
+    "hint": "Взмах вправо и потом вверх.",
+    "color": "#bfe9ff",
+    "fx": [
+      {
+        "p": "lift"
+      }
+    ]
+  },
+  {
+    "id": "stupefy",
+    "school": "wizard",
+    "name": "Ступефай",
+    "phrase": "Ступефай",
+    "gesture": [
+      "zigzag"
+    ],
+    "description": "Молния-зигзаг останавливает даже самого злого тролля.",
+    "element": "lightning",
+    "difficulty": 3,
+    "power": 7,
+    "cost": 4,
+    "range": "далеко",
+    "hint": "Зигзаг палочкой, как молния.",
+    "color": "#ffe14a",
+    "fx": [
+      {
+        "p": "bolt",
+        "n": 2
+      }
+    ]
+  },
+  {
+    "id": "terra",
+    "school": "wizard",
+    "name": "Дефодио",
+    "phrase": "Дефодио",
+    "gesture": [
+      "down",
+      "down"
+    ],
+    "description": "Палочка выкапывает яму в земле, и трещины разбегаются во все стороны. Гномы в восторге.",
+    "element": "earth",
+    "difficulty": 3,
+    "power": 6,
+    "cost": 4,
+    "range": "средне",
+    "hint": "Два раза ударь палочкой вниз, как будто копаешь.",
+    "color": "#9a6b3b",
+    "fx": [
+      {
+        "p": "cracks"
+      }
+    ]
+  },
+  {
+    "id": "protego",
+    "school": "wizard",
+    "name": "Протего",
+    "phrase": "Протего",
+    "gesture": [
+      "circle",
+      "circle"
+    ],
+    "description": "Появляется сияющий щит. Ни одно заклинание не пройдет.",
+    "element": "light",
+    "difficulty": 3,
+    "power": 6,
+    "cost": 3,
+    "range": "близко",
+    "hint": "Нарисуй два круга подряд.",
+    "color": "#fff2a8",
+    "fx": [
+      {
+        "p": "dome"
+      }
+    ]
+  },
+  {
+    "id": "expelli",
+    "school": "wizard",
+    "name": "Экспеллиармус",
+    "phrase": "Экспеллиармус",
+    "gesture": [
+      "swipe_left",
+      "swipe_right"
+    ],
+    "description": "Выбивает палочку из руки соперника. Взмах влево и сразу вправо!",
+    "element": "air",
+    "difficulty": 3,
+    "power": 5,
+    "cost": 3,
+    "range": "далеко",
+    "hint": "Влево, потом вправо.",
+    "color": "#bfe9ff",
+    "fx": [
+      {
+        "p": "ring"
+      }
+    ]
+  },
+  {
+    "id": "umbra",
+    "school": "wizard",
+    "name": "Обскуро",
+    "phrase": "Обскуро",
+    "gesture": [
+      "circle",
+      "down"
+    ],
+    "description": "Темная повязка ложится на глаза, и мир тонет в тайной фиолетовой тьме.",
+    "element": "dark",
+    "difficulty": 4,
+    "power": 7,
+    "cost": 5,
+    "range": "средне",
+    "hint": "Круг и удар вниз.",
+    "color": "#8a3df0",
+    "fx": [
+      {
+        "p": "vortex"
+      }
+    ]
+  },
+  {
+    "id": "patronus",
+    "school": "wizard",
+    "name": "Экспекто Патронум",
+    "phrase": "Экспекто Патронум",
+    "gesture": [
+      "circle",
+      "up"
+    ],
+    "description": "Из палочки вылетает серебряный защитник и прогоняет любые страхи.",
+    "element": "light",
+    "difficulty": 5,
+    "power": 10,
+    "cost": 8,
+    "range": "далеко",
+    "hint": "Круг и вверх. Подумай о самом радостном!",
+    "color": "#fff2a8",
+    "fx": [
+      {
+        "p": "spirit",
+        "c": "#bfe9ff"
+      }
+    ]
+  },
+  {
+    "id": "kai",
+    "school": "shinobi",
+    "name": "Освобождение от иллюзии",
+    "phrase": "Кай",
+    "gesture": [
+      "peace"
+    ],
+    "description": "Снимает любую иллюзию. Призраки оказываются простыней.",
+    "element": "light",
+    "difficulty": 1,
+    "power": 2,
+    "cost": 1,
+    "range": "близко",
+    "hint": "Овца: два пальца вверх.",
+    "color": "#fff2a8",
+    "fx": [
+      {
+        "p": "ripples"
+      }
+    ]
+  },
+  {
+    "id": "kawarimi",
+    "school": "shinobi",
+    "name": "Замена",
+    "phrase": "Каварими но дзюцу",
+    "gesture": [
+      "prayer",
+      "double_fist",
+      "fist_palm",
+      "fist_up"
+    ],
+    "description": "Ты исчезаешь, а вместо тебя остается полено. Враг в замешательстве.",
+    "element": "earth",
+    "difficulty": 3,
+    "power": 3,
+    "cost": 2,
+    "range": "близко",
+    "hint": "Тигр, Свинья, Собака, Змея.",
+    "color": "#9a6b3b",
+    "fx": [
+      {
+        "p": "log"
+      }
+    ]
+  },
+  {
+    "id": "setsuna",
+    "school": "shinobi",
+    "name": "Мгновение",
+    "phrase": "Сэцуна",
+    "gesture": [
+      "double_fist"
+    ],
+    "description": "Рывок на огромной скорости, взмах мечом, и все уже позади. Враг только моргнул.",
+    "element": "air",
+    "difficulty": 1,
+    "power": 4,
+    "cost": 3,
+    "range": "средне",
+    "hint": "Ручных печатей нет: просто сожми два кулака, как перед стартом.",
+    "color": "#bfe9ff",
+    "fx": [
+      {
+        "p": "dash"
+      }
+    ]
+  },
+  {
+    "id": "futon",
+    "school": "shinobi",
+    "name": "Великий порыв",
+    "phrase": "Футон Дайтоппа",
+    "gesture": [
+      "open_hands"
+    ],
+    "description": "Огромная струя воздуха сдувает листья, облака и пару ленивых теней.",
+    "element": "air",
+    "difficulty": 2,
+    "power": 5,
+    "cost": 3,
+    "range": "далеко",
+    "hint": "Ручных печатей нет: раскрой обе ладони и раздвинь руки.",
+    "color": "#bfe9ff",
+    "fx": [
+      {
+        "p": "slashes"
+      }
+    ]
+  },
+  {
+    "id": "kage",
+    "school": "shinobi",
+    "name": "Теневое клонирование",
+    "phrase": "Кагэ Буншин но дзюцу",
+    "gesture": [
+      "prayer"
+    ],
+    "description": "Появляются двойники, и каждый хохочет вместе с тобой.",
+    "element": "dark",
+    "difficulty": 2,
+    "power": 6,
+    "cost": 5,
+    "range": "близко",
+    "hint": "Тигр: ладони вместе, пальцы вверх.",
+    "color": "#8a3df0",
+    "fx": [
+      {
+        "p": "tendrils"
+      }
+    ]
+  },
+  {
+    "id": "katon",
+    "school": "shinobi",
+    "name": "Огненный шар",
+    "phrase": "Катон Гокакю но дзюцу",
+    "gesture": [
+      "fist_up",
+      "peace",
+      "open_hands",
+      "prayer"
+    ],
+    "description": "Ты выдыхаешь огромный огненный шар, как дракон на празднике.",
+    "element": "fire",
+    "difficulty": 4,
+    "power": 8,
+    "cost": 5,
+    "range": "средне",
+    "hint": "Змея, Овца, Обезьяна, Тигр.",
+    "color": "#ff6a1a",
+    "fx": [
+      {
+        "p": "fireball"
+      },
+      {
+        "p": "embers",
+        "n": 16,
+        "at": 0.6
+      }
+    ]
+  },
+  {
+    "id": "doton",
+    "school": "shinobi",
+    "name": "Стена из грязи",
+    "phrase": "Дотон Дорюхеки",
+    "gesture": [
+      "prayer",
+      "double_fist",
+      "fist_palm"
+    ],
+    "description": "Из земли встает стена из грязи и защищает всю команду.",
+    "element": "earth",
+    "difficulty": 3,
+    "power": 6,
+    "cost": 4,
+    "range": "средне",
+    "hint": "Тигр, Свинья, Собака.",
+    "color": "#9a6b3b",
+    "fx": [
+      {
+        "p": "wall"
+      }
+    ]
+  },
+  {
+    "id": "hyoton",
+    "school": "shinobi",
+    "name": "Ледяные зеркала демонов",
+    "phrase": "Хётон Макё Хёшо",
+    "gesture": [
+      "peace"
+    ],
+    "description": "Вокруг вырастают ледяные зеркала, и в каждом отражение показывает язык.",
+    "element": "ice",
+    "difficulty": 2,
+    "power": 6,
+    "cost": 5,
+    "range": "далеко",
+    "hint": "Особая печать Хаку, одна рука: два пальца вверх.",
+    "color": "#8fe3ff",
+    "fx": [
+      {
+        "p": "mirrors"
+      }
+    ]
+  },
+  {
+    "id": "suiton",
+    "school": "shinobi",
+    "name": "Водяной дракон",
+    "phrase": "Суйтон Суйрюдан но дзюцу",
+    "gesture": [
+      "prayer",
+      "double_fist",
+      "fist_palm",
+      "double_fist"
+    ],
+    "description": "Из воды поднимается дракон и несет тебя над озером.",
+    "element": "water",
+    "difficulty": 5,
+    "power": 8,
+    "cost": 6,
+    "range": "далеко",
+    "hint": "Тигр, Свинья, Собака, Свинья: начало длинной цепочки из 21 печати.",
+    "color": "#2fa8ff",
+    "fx": [
+      {
+        "p": "tsunami"
+      }
+    ]
+  },
+  {
+    "id": "inton",
+    "school": "shinobi",
+    "name": "Растворение в тумане",
+    "phrase": "Киригакурэ но дзюцу",
+    "gesture": [
+      "fist_up"
+    ],
+    "description": "Густой туман окутывает поляну, и даже призраки теряются в нем.",
+    "element": "dark",
+    "difficulty": 2,
+    "power": 7,
+    "cost": 6,
+    "range": "средне",
+    "hint": "Ручных печатей нет: подними кулак и представь густой туман.",
+    "color": "#8a3df0",
+    "fx": [
+      {
+        "p": "mist"
+      }
+    ]
+  },
+  {
+    "id": "raiton",
+    "school": "shinobi",
+    "name": "Чидори",
+    "phrase": "Чидори",
+    "gesture": [
+      "open_hands",
+      "fist_up",
+      "fist_palm",
+      "prayer"
+    ],
+    "description": "В руке трещит голубая молния, и слышно, как поют тысячи птиц.",
+    "element": "lightning",
+    "difficulty": 5,
+    "power": 10,
+    "cost": 8,
+    "range": "далеко",
+    "hint": "Обезьяна, Змея, Собака, Тигр.",
+    "color": "#ffe14a",
+    "fx": [
+      {
+        "p": "chidori"
+      },
+      {
+        "p": "flash",
+        "a": 0.2,
+        "len": 0.08
+      }
+    ]
+  },
+  {
+    "id": "ryuka",
+    "school": "shinobi",
+    "name": "Простое пламя дракона",
+    "phrase": "Катон Рюка но дзюцу",
+    "gesture": [
+      "fist_up",
+      "prayer"
+    ],
+    "description": "Огромный огненный дракон кружится над площадью и поджигает фейерверк.",
+    "element": "fire",
+    "difficulty": 2,
+    "power": 10,
+    "cost": 9,
+    "range": "далеко",
+    "hint": "Змея, Тигр.",
+    "color": "#ff6a1a",
+    "fx": [
+      {
+        "p": "serpent"
+      }
+    ]
+  },
+  {
+    "id": "starlight",
+    "school": "wizard",
+    "universe": "lotr",
+    "name": "Звездный Свет",
+    "phrase": "Звездный Свет",
+    "gesture": [
+      "up"
+    ],
+    "description": "Крошечная звезда зажигается в ладони и освещает самый темный туннель.",
+    "element": "light",
+    "difficulty": 2,
+    "power": 3,
+    "cost": 2,
+    "range": "близко",
+    "hint": "Подними палочку вверх, как звезду.",
+    "color": "#fff2a8",
+    "fx": [
+      {
+        "p": "stars"
+      }
+    ]
+  },
+  {
+    "id": "earendil",
+    "school": "wizard",
+    "universe": "lotr",
+    "name": "Свет Эарендила",
+    "phrase": "Эарендил Лумэн",
+    "gesture": [
+      "circle"
+    ],
+    "description": "Эльфийский свет разгоняет тьму и пугает любых пауков.",
+    "element": "light",
+    "difficulty": 2,
+    "power": 5,
+    "cost": 3,
+    "range": "средне",
+    "hint": "Нарисуй круг палочкой.",
+    "color": "#fff2a8",
+    "fx": [
+      {
+        "p": "comet"
+      }
+    ]
+  },
+  {
+    "id": "entwake",
+    "school": "wizard",
+    "universe": "lotr",
+    "name": "Пробуждение Энта",
+    "phrase": "Ходрим Энтэ",
+    "gesture": [
+      "up",
+      "down"
+    ],
+    "description": "Старые деревья просыпаются, потягиваются и идут на помощь.",
+    "element": "earth",
+    "difficulty": 3,
+    "power": 7,
+    "cost": 5,
+    "range": "средне",
+    "hint": "Вверх, потом вниз, как растет и падает дерево.",
+    "color": "#9a6b3b",
+    "fx": [
+      {
+        "p": "tree"
+      }
+    ]
+  },
+  {
+    "id": "eagles",
+    "school": "wizard",
+    "universe": "lotr",
+    "name": "Зов Орлов",
+    "phrase": "Крылья Орлов",
+    "gesture": [
+      "swipe_right",
+      "up"
+    ],
+    "description": "Огромные орлы прилетают и уносят друзей из беды в небо.",
+    "element": "air",
+    "difficulty": 3,
+    "power": 7,
+    "cost": 5,
+    "range": "далеко",
+    "hint": "Взмах вправо и вверх, как крылья.",
+    "color": "#bfe9ff",
+    "fx": [
+      {
+        "p": "flock"
+      }
+    ]
+  },
+  {
+    "id": "youshall",
+    "school": "wizard",
+    "universe": "lotr",
+    "name": "Ты не пройдешь",
+    "phrase": "Ты не пройдешь",
+    "gesture": [
+      "down",
+      "down"
+    ],
+    "description": "Могучий маг ударяет посохом, и мост закрывается для любого монстра.",
+    "element": "earth",
+    "difficulty": 4,
+    "power": 9,
+    "cost": 7,
+    "range": "средне",
+    "hint": "Два раза ударь посохом вниз.",
+    "color": "#9a6b3b",
+    "fx": [
+      {
+        "p": "gate"
+      }
+    ]
+  },
+  {
+    "id": "mountfire",
+    "school": "wizard",
+    "universe": "lotr",
+    "name": "Огонь Роковой Горы",
+    "phrase": "Огонь Роковой Горы",
+    "gesture": [
+      "circle",
+      "zigzag"
+    ],
+    "description": "Из недр горы вырывается пламя, но только чтобы сжечь злые чары.",
+    "element": "fire",
+    "difficulty": 4,
+    "power": 10,
+    "cost": 8,
+    "range": "далеко",
+    "hint": "Круг и зигзаг.",
+    "color": "#ff6a1a",
+    "fx": [
+      {
+        "p": "meteor"
+      }
+    ]
+  }
+]

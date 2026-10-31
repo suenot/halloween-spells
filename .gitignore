@@ -1,0 +1,10 @@
+node_modules
+.DS_Store
+public/vendor/mediapipe/
+build/
+data/players.json
+data/teams.json
+data/tournaments.json
+data/current.json
+public/api-data/
+.vercel

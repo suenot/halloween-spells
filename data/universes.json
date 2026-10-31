@@ -1,0 +1,254 @@
+[
+ {
+  "id": "hp",
+  "name": "Гарри Поттер",
+  "icon": "🪄",
+  "school": "wizard",
+  "factionLabel": "Факультет",
+  "factions": [
+   {
+    "id": "gryffindor",
+    "name": "Гриффиндор",
+    "color": "#e0443e",
+    "icon": "🦁"
+   },
+   {
+    "id": "slytherin",
+    "name": "Слизерин",
+    "color": "#2fbf71",
+    "icon": "🐍"
+   },
+   {
+    "id": "ravenclaw",
+    "name": "Когтевран",
+    "color": "#4f8cff",
+    "icon": "🦅"
+   },
+   {
+    "id": "hufflepuff",
+    "name": "Пуффендуй",
+    "color": "#ffd23f",
+    "icon": "🦡"
+   }
+  ],
+  "classes": [
+   {
+    "id": "student",
+    "name": "Ученик чародей",
+    "icon": "📚"
+   },
+   {
+    "id": "seeker",
+    "name": "Ловец",
+    "icon": "🧹"
+   },
+   {
+    "id": "potioner",
+    "name": "Зельевар",
+    "icon": "🧪"
+   },
+   {
+    "id": "healer",
+    "name": "Целитель",
+    "icon": "💚"
+   },
+   {
+    "id": "auror",
+    "name": "Аврор",
+    "icon": "🛡️"
+   },
+   {
+    "id": "herbalist",
+    "name": "Травник",
+    "icon": "🌿"
+   }
+  ],
+  "races": [
+   {
+    "id": "human",
+    "name": "Волшебник",
+    "icon": "🧙"
+   },
+   {
+    "id": "elf",
+    "name": "Домовой эльф",
+    "icon": "🧝"
+   },
+   {
+    "id": "centaur",
+    "name": "Кентавр",
+    "icon": "🏹"
+   },
+   {
+    "id": "goblin",
+    "name": "Гоблин",
+    "icon": "💰"
+   },
+   {
+    "id": "giant",
+    "name": "Великан",
+    "icon": "🧌"
+   }
+  ]
+ },
+ {
+  "id": "naruto",
+  "name": "Наруто",
+  "icon": "🥷",
+  "school": "shinobi",
+  "factionLabel": "Деревня",
+  "factions": [
+   {
+    "id": "leaf",
+    "name": "Скрытый Лист",
+    "color": "#5fd35f",
+    "icon": "🍃"
+   },
+   {
+    "id": "sand",
+    "name": "Скрытый Песок",
+    "color": "#e6c36a",
+    "icon": "🏜️"
+   },
+   {
+    "id": "mist",
+    "name": "Скрытый Туман",
+    "color": "#7fb7ff",
+    "icon": "🌫️"
+   },
+   {
+    "id": "stone",
+    "name": "Скрытый Камень",
+    "color": "#b08968",
+    "icon": "⛰️"
+   },
+   {
+    "id": "cloud",
+    "name": "Скрытое Облако",
+    "color": "#d0d8ff",
+    "icon": "☁️"
+   }
+  ],
+  "classes": [
+   {
+    "id": "genin",
+    "name": "Генин",
+    "icon": "🥋"
+   },
+   {
+    "id": "chunin",
+    "name": "Чунин",
+    "icon": "🦺"
+   },
+   {
+    "id": "jonin",
+    "name": "Джонин",
+    "icon": "⭐"
+   },
+   {
+    "id": "medic",
+    "name": "Ниндзя-медик",
+    "icon": "💚"
+   },
+   {
+    "id": "sensor",
+    "name": "Сенсор",
+    "icon": "👁️"
+   },
+   {
+    "id": "taijutsu",
+    "name": "Мастер тайдзюцу",
+    "icon": "👊"
+   }
+  ],
+  "races": [
+   {
+    "id": "human",
+    "name": "Человек",
+    "icon": "🧑"
+   },
+   {
+    "id": "kitsune",
+    "name": "Кицунэ",
+    "icon": "🦊"
+   },
+   {
+    "id": "toad",
+    "name": "Призыватель жаб",
+    "icon": "🐸"
+   },
+   {
+    "id": "giant",
+    "name": "Великан",
+    "icon": "🧌"
+   }
+  ]
+ },
+ {
+  "id": "lotr",
+  "name": "Властелин Колец",
+  "icon": "💍",
+  "school": "wizard",
+  "factionLabel": "Народ",
+  "factions": [],
+  "classes": [
+   {
+    "id": "warrior",
+    "name": "Воин",
+    "icon": "⚔️"
+   },
+   {
+    "id": "ranger",
+    "name": "Следопыт",
+    "icon": "🌲"
+   },
+   {
+    "id": "mage",
+    "name": "Маг",
+    "icon": "🔮"
+   },
+   {
+    "id": "archer",
+    "name": "Лучник",
+    "icon": "🏹"
+   },
+   {
+    "id": "healer",
+    "name": "Целитель",
+    "icon": "💚"
+   }
+  ],
+  "races": [
+   {
+    "id": "elf",
+    "name": "Эльф",
+    "icon": "🧝"
+   },
+   {
+    "id": "dwarf",
+    "name": "Гном",
+    "icon": "⛏️"
+   },
+   {
+    "id": "hobbit",
+    "name": "Хоббит",
+    "icon": "🍄"
+   },
+   {
+    "id": "man",
+    "name": "Человек",
+    "icon": "🧑"
+   },
+   {
+    "id": "ent",
+    "name": "Энт",
+    "icon": "🌳"
+   },
+   {
+    "id": "giant",
+    "name": "Великан",
+    "icon": "🧌"
+   }
+  ]
+ }
+]

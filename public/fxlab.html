@@ -1,0 +1,18 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>fxlab</title>
+<style>body{margin:0;background:#0b0618;color:#ddd;font:12px system-ui;display:grid;grid-template-columns:repeat(6,1fr);gap:4px;padding:4px}
+div{position:relative}canvas{width:100%;aspect-ratio:4/3;background:radial-gradient(circle at 50% 40%,#2a1650,#0a0614);border-radius:8px;display:block}
+span{position:absolute;left:6px;top:4px}</style>
+<body></body>
+<script type="module">
+import { drawFx } from "./js/engine/spellfx.js";
+const spells = await (await fetch("/api/spells")).json();
+const K = +(new URLSearchParams(location.search).get("k") ?? 0.45);
+for (const s of spells) {
+  const d = document.createElement("div"), c = document.createElement("canvas"); c.width = 320; c.height = 240;
+  d.append(c, Object.assign(document.createElement("span"), { textContent: s.id })); document.body.append(d);
+  const ctx = c.getContext("2d"); drawFx(ctx, s.fx, K, { W: 320, H: 240, color: s.color, power: s.power });
+}
+window.ready = true;
+</script>
