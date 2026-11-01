@@ -6,6 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "harry-potter"
 CAND = {c["id"]: c for v in json.load(open(ROOT / "hp_candidates.json")).values() for c in v["candidates"]}
+CAND["8kdmqEN3674"] = {"title": "Fantastic Beast 2 - Credence Power scene", "channel": "Adjust Player Gaming", "duration": 50}
 PICKS = {
     "lumos": ["cEsKCVaOsWM", "W8t9CU1kJP0"],
     "repairo": ["oIX5lTPoZJY", "Ne8YJ-Ly1VU"],
@@ -29,7 +30,7 @@ for spell, ids in PICKS.items():
     for vid in ids:
         f = d / f"{vid}.mp4"
         if not f.exists():
-            r = subprocess.run(["yt-dlp", "-q", "--no-warnings", "-f", "b[height<=480][ext=mp4]/bv*[height<=480]+ba/b[height<=480]/b",
+            r = subprocess.run(["yt-dlp", "--cookies-from-browser", "chrome", "-q", "--no-warnings", "-f", "b[height<=480][ext=mp4]/bv*[height<=480]+ba/b[height<=480]/b",
                                 "--merge-output-format", "mp4", "-o", str(f), f"https://www.youtube.com/watch?v={vid}"],
                                capture_output=True, text=True)
             if r.returncode or not f.exists():

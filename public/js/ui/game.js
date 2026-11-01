@@ -14,6 +14,7 @@ import { demoPlayer } from "./demo.js";
 import { tiles, toggle } from "./controls.js";
 import { renderChorus } from "./chorus.js";
 import { openWandCalibration } from "./calibrate.js";
+import { refClip } from "./refclip.js";
 import { findWandTip } from "../engine/wand.js";
 import { audio } from "../engine/audio.js";
 
@@ -165,6 +166,7 @@ function renderStage(root) {
       h("div", { class: "who" }, h("span", { class: "avatar" }, p?.avatar ?? "🎃"), h("div", {}, h("small", {}, `Ход ${cur.index + 1} из ${t.queue.length}${p?.race === "giant" ? " · великан" : ""}`), h("h2", {}, p?.name ?? "?"))),
       cur.text && h("p", { class: "story-line" }, cur.text),
       h("div", { class: "spellbox" }, h("small", {}, `${el.icon} ${el.label}`), h("h1", {}, sp.name), h("p", { class: "phrase big" }, `"${sp.phrase}"`), gesturePills(sp.gesture), h("p", { class: "hint" }, sp.hint), pumpkins(sp.difficulty)),
+      refClip(sp.id, { compact: true }),
       demoFor(`r${cur.index}`, sp.gesture, true, sp.color));
     controls.replaceChildren(h("button", { class: "btn primary big", onclick: begin }, "▶ Колдовать (Enter)"),
       h("button", { class: "btn ghost", onclick: skip }, "Пропустить"));

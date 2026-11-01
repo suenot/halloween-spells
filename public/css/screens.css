@@ -136,3 +136,10 @@
 
 /* крестик модалки не перекрывается шапкой */
 .spell-modal > .badge { justify-self: start; max-width: calc(100% - 52px); }
+
+/* local reference clips (films/cartoons), only shown when the private files exist */
+.refclip { margin: 0; display: grid; gap: 4px; justify-items: center; }
+.refclip[hidden] { display: none; }
+.refclip video { width: 100%; max-height: 260px; border-radius: 14px; background: #000; object-fit: contain; border: 1px solid var(--line); }
+.refclip figcaption { font-size: 12px; color: var(--muted); }
+.refclip.compact video { max-height: 150px; width: auto; max-width: 100%; }

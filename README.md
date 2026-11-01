@@ -57,3 +57,7 @@ scripts/fetch-vendor.sh   # один раз, если нет public/vendor/media
 
 - Волшебники: Harry Potter Wiki (harrypotter.fandom.com): Lumos, Reparo, Aqua Eructo, Incendio, Glacius, Wingardium Leviosa, Stupefy, Defodio, Protego, Expelliarmus, Obscuro, Expecto Patronum.
 - Шиноби: Школа техник Наруто (jut.su/by-episodes/): русские названия техник и страницы "Как сделать" с цепочками печатей; оригинальные названия сверены с Narutopedia (naruto.fandom.com). В игре шесть жестов-печатей: Тигр, Свинья, Собака, Овца, Обезьяна, Змея. Из цепочки на сайте берутся печати этого набора, не больше четырех, в исходном порядке. У техник без ручных печатей (Великий порыв, Мгновение, Растворение в тумане, Ледяные зеркала демонов) дан один простой жест.
+
+## Референс-ролики (локально)
+
+`references/search_hp.py` ищет короткие ролики с заклинаниями Гарри Поттера, `references/fetch_hp.py` скачивает выбранные (yt-dlp, 480p, нужны куки Chrome) в `references/harry-potter/<id>/` и пишет `index.json`. Это чужой контент: папка в `.gitignore`, в репозиторий и на Vercel не попадает. Локальный `server.mjs` отдает файлы по `/refs/harry-potter/` (с Range), а книга заклинаний и экран хода показывают их обычным `<video>` ("Как в кино"). Нет файлов, нет блока.
