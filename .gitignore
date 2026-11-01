@@ -10,3 +10,5 @@ public/api-data/
 .vercel
 .env*
 public/vendor/asr/
+references/harry-potter/
+public/refs/
