@@ -3,7 +3,7 @@
 // on a build without them the index is missing and no element is shown.
 import { h } from "./dom.js";
 
-export const UNIVERSES = ["harry-potter", "naruto"];
+export const UNIVERSES = ["harry-potter", "naruto", "lotr"];
 let index = null;
 
 // One merged index: spell id -> clips, each with the URL of its file. Spell ids are unique across universes.

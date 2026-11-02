@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
-const REF_UNIVERSES = ["harry-potter", "naruto"];
+const REF_UNIVERSES = ["harry-potter", "naruto", "lotr"];
 const NAMES = new Set(["players", "teams", "spells", "stories", "tournaments", "universes", "monsters", "current"]);
 const TYPES = {
   ".html": "text/html; charset=utf-8",
