@@ -5,6 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
+const REF_UNIVERSES = ["harry-potter", "naruto"];
 const NAMES = new Set(["players", "teams", "spells", "stories", "tournaments", "universes", "monsters", "current"]);
 const TYPES = {
   ".html": "text/html; charset=utf-8",
@@ -100,7 +101,7 @@ export function startServer(port = 5173, dataDir = path.join(ROOT, "data")) {
         return await api(req, res, url.pathname.slice(5), dataDir);
       }
       // Local-only reference clips (gitignored, never deployed): /refs/* -> references/*
-      if (url.pathname.startsWith("/refs/harry-potter/")) return await serveStatic(req, res, url.pathname.slice(5), path.join(ROOT, "references"));
+      if (REF_UNIVERSES.some((u) => url.pathname.startsWith(`/refs/${u}/`))) return await serveStatic(req, res, url.pathname.slice(5), path.join(ROOT, "references"));
       await serveStatic(req, res, url.pathname, publicDir);
     } catch (e) {
       send(res, 500, JSON.stringify({ error: String(e) }));

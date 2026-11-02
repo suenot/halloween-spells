@@ -1,28 +1,17 @@
-"""Download picked Harry Potter reference shorts (local playback only, never committed).
-Run: python3 -I references/fetch_hp.py  ->  references/harry-potter/<spell>/<id>.mp4 + index.json"""
+"""Download picked reference shorts for one universe (local playback only, never committed).
+Run: python3 -I references/fetch_clips.py harry-potter|naruto
+Reads <universe>_candidates.json (search results) and picks_<universe>.json ({spell id: [video ids]}),
+writes references/<universe>/<spell>/<id>.mp4 and references/<universe>/index.json. Needs Chrome cookies for yt-dlp."""
 import json, subprocess, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-OUT = ROOT / "harry-potter"
-CAND = {c["id"]: c for v in json.load(open(ROOT / "hp_candidates.json")).values() for c in v["candidates"]}
-CAND["8kdmqEN3674"] = {"title": "Fantastic Beast 2 - Credence Power scene", "channel": "Adjust Player Gaming", "duration": 50}
-PICKS = {
-    "lumos": ["cEsKCVaOsWM", "W8t9CU1kJP0"],
-    "repairo": ["oIX5lTPoZJY", "Ne8YJ-Ly1VU"],
-    "aqua": ["am9Na5YUNkY"],
-    "incendio": ["QeYoiBmuzOM", "bxVu-CnIg60"],
-    "glacius": ["sCFSh0qjJuw"],
-    "levitate": ["fx2zLgdkJpk", "4xtouVRc3Ho"],
-    "stupefy": ["hkigUiTFURs", "adlf9gnmAoM"],
-    "protego": ["1-eBmiiCQ40", "IkYAmDe5Z3Q"],
-    "expelli": ["PdrQLZnAMAs", "xwS-D1gTugk"],
-    "umbra": ["8kdmqEN3674"],
-    "patronus": ["PdrQLZnAMAs", "oQye2THWI7o"],
-    "bombarda": ["u9zOS4tncVU", "97RkWfqpenY", "lH7kMHVeHlI"],
-    "everte": ["JYxcsbnKTpA"],
-    "reducto": ["9v-ucTA4kog", "xNHSOWtgdQ4"],
-}
+universe = sys.argv[1]
+OUT = ROOT / universe
+cand_file = ROOT / ("hp_candidates.json" if universe == "harry-potter" else f"{universe}_candidates.json")
+CAND = {c["id"]: c for v in json.load(open(cand_file)).values() for c in v["candidates"]}
+CAND.update(json.load(open(ROOT / "extra_candidates.json")))  # hand-added clips not in a search result
+PICKS = json.load(open(ROOT / f"picks_{universe}.json"))
 index = {}
 for spell, ids in PICKS.items():
     d = OUT / spell

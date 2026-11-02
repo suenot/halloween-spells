@@ -42,9 +42,11 @@ test("bad json is 400", () =>
     assert.equal(r.status, 400);
   }));
 
-test("reference clips: only /refs/harry-potter/, no traversal, 404 when missing", () =>
+test("reference clips: only known universes, no traversal, 404 when missing", () =>
   withServer(async (base) => {
     assert.equal((await fetch(`${base}/refs/harry-potter/none/none.mp4`)).status, 404);
     assert.equal((await fetch(`${base}/refs/hp_candidates.json`)).status, 404);
+    assert.equal((await fetch(`${base}/refs/naruto/none/none.mp4`)).status, 404);
+    assert.equal((await fetch(`${base}/refs/secret/x.mp4`)).status, 404);
     assert.equal((await fetch(`${base}/refs/harry-potter/..%2F..%2Fserver.mjs`)).status, 404);
   }));

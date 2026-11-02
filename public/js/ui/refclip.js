@@ -1,18 +1,21 @@
-// Local reference clips (films/cartoons) for a spell, played from downloaded files, never from YouTube.
-// The files are private and gitignored (references/harry-potter/, served at /refs/harry-potter/ by server.mjs only);
+// Local reference clips (films/anime) for a spell, played from downloaded files, never from YouTube.
+// The files are private and gitignored (references/<universe>/, served at /refs/<universe>/ by server.mjs only);
 // on a build without them the index is missing and no element is shown.
 import { h } from "./dom.js";
 
-const BASE = "/refs/harry-potter/";
+export const UNIVERSES = ["harry-potter", "naruto"];
 let index = null;
 
+// One merged index: spell id -> clips, each with the URL of its file. Spell ids are unique across universes.
 function loadIndex() {
-  index ??= fetch(`${BASE}index.json`).then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  index ??= Promise.all(UNIVERSES.map((u) => fetch(`/refs/${u}/index.json`).then((r) => (r.ok ? r.json() : {})).catch(() => ({}))
+    .then((idx) => Object.entries(idx).map(([id, clips]) => [id, clips.map((c) => ({ ...c, src: `/refs/${u}/${c.file}` }))]))))
+    .then((parts) => Object.fromEntries(parts.flat()));
   return index;
 }
 
 export function refClips(idx, spellId) {
-  return (idx?.[spellId] ?? []).map((c) => ({ ...c, src: BASE + c.file }));
+  return idx?.[spellId] ?? [];
 }
 
 // Returns an element that fills itself with a looping muted clip if one exists; stays hidden otherwise.

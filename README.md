@@ -60,4 +60,4 @@ scripts/fetch-vendor.sh   # один раз, если нет public/vendor/media
 
 ## Референс-ролики (локально)
 
-`references/search_hp.py` ищет короткие ролики с заклинаниями Гарри Поттера, `references/fetch_hp.py` скачивает выбранные (yt-dlp, 480p, нужны куки Chrome) в `references/harry-potter/<id>/` и пишет `index.json`. Это чужой контент: папка в `.gitignore`, в репозиторий и на Vercel не попадает. Локальный `server.mjs` отдает файлы по `/refs/harry-potter/` (с Range), а книга заклинаний и экран хода показывают их обычным `<video>` ("Как в кино"). Нет файлов, нет блока.
+`references/search_hp.py` и `search_naruto.py` ищут короткие ролики с заклинаниями, `python3 -I references/fetch_clips.py harry-potter|naruto` скачивает выбранные (`picks_<вселенная>.json`; yt-dlp, 480p, нужны куки Chrome) в `references/<вселенная>/<id>/` и пишет `index.json`. Это чужой контент: папка в `.gitignore`, в репозиторий и на Vercel не попадает. Локальный `server.mjs` отдает файлы по `/refs/<вселенная>/` (с Range), а книга заклинаний и экран хода показывают их обычным `<video>` ("Как в кино"). Нет файлов, нет блока.
